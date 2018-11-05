@@ -26,7 +26,7 @@ module.exports = {
   contentFor(type) {
     if (type === 'head') {
       return `<meta name="ember-cli-iam:assetMap" content="${MetaPlaceholder}">`;
-    }  
+    }
   },
 
   postBuild(build) {
