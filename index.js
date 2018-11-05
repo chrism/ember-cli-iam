@@ -1,14 +1,9 @@
 'use strict';
 
-const fs = require('fs-extra');
+const fs = require('fs');
 const path = require('path');
 
 const MetaPlaceholder = '__ember-cli-iam__AssetMapPlaceholder__';
-
-// function replacePlaceholder(filePath, assetMap) {
-//   const fileBody = fs.readFileSync(filePath, { encoding: 'utf-8' });
-//   fs.writeFileSync(filePath, fileBody.replace(MetaPlaceholder, assetMap));
-// }
 
 function replacePlaceholder(filePath, assetMap) {
   const assetMapString = encodeURIComponent(JSON.stringify(assetMap));
@@ -23,6 +18,11 @@ module.exports = {
     return false;
   },
 
+  treeForFastBoot(tree) {
+    this._isFastBoot = true;
+    return tree;
+  },
+
   contentFor(type) {
     if (type !== 'head') {
       return;
@@ -34,43 +34,28 @@ module.exports = {
   postBuild(build) {
     this._super.included.apply(this, arguments);
 
-    // const files = fs.readdirSync(path.join(build.directory, 'assets'));
-    // const totalFiles = files.length;
-    //
-    // let assetFileName = null;
-    // for (let i = 0; i < totalFiles; i++) {
-    //   if (files[i].match(/^assetMap/i)) {
-    //     assetFileName = files[i];
-    //     break;
-    //   }
-    // }
-    //
-    // const assetFileNamePath = `${build.directory}/assets/${assetFileName}`;
-    //
-    // let assetMap = JSON.parse(fs.readFileSync(assetFileNamePath, { encoding: 'utf-8' }));
-    //
-    // console.log({ assetMap });
-    //
-    // replacePlaceholder(path.join(build.directory, 'tests/index.html'), assetMap);
+    const assetFileNamePath = `${build.directory}/assets/assetMap.json`;
 
-
-
-    let assetPath = path.join(build.directory, 'assets');
-    let assetMapFileExists = fs.existsSync(`${assetPath}/assetMap.json`);
-    let assetsJson;
-
-    if (assetMapFileExists) {
-      assetsJson = JSON.parse(fs.readFileSync(`${assetPath}/assetMap.json`), { encoding: 'utf-8' });
-    } else {
-      throw new Error('ember-cli-iam: There needs to be the an assetMap.json file, see documentation for more details.');
+    if (!fs.existsSync(assetFileNamePath)) {
+      throw new Error('ember-cli-iam: There must be an assetMap generated, see documentation for more information.');
     }
 
-    this.ui.writeLine(`assets: ${JSON.stringify(assetsJson)}`);
+    let assetMap = JSON.parse(fs.readFileSync(assetFileNamePath, { encoding: 'utf-8' }));
 
-    // const assetMapString = encodeURIComponent(JSON.stringify(assetsJson));
+    let extensions = ['css', 'svg', 'png', 'jpg', 'jpeg', 'gif'].join("|");
+    let validExtensions = new RegExp(`\.(${extensions})$`);
 
-    // ['tests/index.html'].forEach(filePath => {
-    //   replacePlaceholder(filePath, assetsJson);
-    // });
+    let filteredAssetMap = Object.keys(assetMap.assets)
+      .filter(key => key.match(validExtensions))
+      .reduce((obj, key) => {
+        return {
+          ...obj,
+          [key]: assetMap.assets[key]
+        };
+      }, {});
+
+    ['index.html', 'tests/index.html'].forEach( filePath => {
+      replacePlaceholder(path.join(build.directory, filePath), filteredAssetMap);
+    });
   }
 };
