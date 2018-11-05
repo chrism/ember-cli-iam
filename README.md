@@ -1,6 +1,30 @@
 ember-cli-iam
 ==============================================================================
 
+TODO
+------------------------------------------------------------------------------
+
+[] ember engines
+see: https://github.com/jcaffey/ember-cli-inject-asset-map/blob/a465db5e8565cde729f5baa9ef8a48da49454009/index.js
+https://github.com/jcaffey/ember-cli-inject-asset-map
+
+[] getDOM using fastboot
+see: https://github.com/yapplabs/ember-wormhole/blob/master/addon/utils/dom.js
+
+[] use fastboot service with getOwner
+see: https://ember-fastboot.com/docs/addon-author-guide#accessing-the-fastboot-service
+
+
+
+Ember CLI Addon docs
+https://ember-cli.com/api/classes/Addon.html
+
+Ember CLI Guides extending addons
+https://ember-cli.com/extending/#developing-addons-and-blueprints
+
+
+
+
 [Short description of the addon.]
 
 Installation
