@@ -5,6 +5,6 @@ export default Helper.extend({
   assetMap: service(),
 
   compute(params) {
-    return this.assetMap.getPath(params);
+    return this.assetMap.fingerprintedPath(params);
   }
 });
