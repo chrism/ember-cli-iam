@@ -10,4 +10,10 @@ export default Component.extend({
   src: computed('path', 'extension', function() {
     return this.assetMap.fingerprintedPath(`${this.path}${this.extension}`);
   }),
+  // 
+  // init() {
+  //   this._super(...arguments);
+  //
+  //   console.log('component this...', this);
+  // },
 });
