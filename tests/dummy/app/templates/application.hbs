@@ -1,11 +1,17 @@
-<h2 id="title">Welcome to Ember</h2>
-
-<img src="assets/tomster-under-construction.png" alt="Tomster" class="tomster">
+<h2 id="title">Injecting fingerprinted assets</h2>
 
 <img
-  src={{fingerprinted-path (concat "assets/tomster-under-construction" extension)}}
+  src="/assets/tomster-under-construction.png"
+  alt="Tomster"
+  class="tomster"
+  id="tomster-reference"
+>
+
+<img
+  src={{fingerprinted-path (concat "/assets/tomster-under-construction" extension)}}
   alt="Tomster concat"
   class="tomster"
+  id="tomster-helper"
 >
 
 {{outlet}}
