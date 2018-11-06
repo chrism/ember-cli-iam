@@ -19,9 +19,15 @@ export default Service.extend({
 
     let document = getOwner(this).lookup('service:-document');
 
+    const jsdom = FastBoot.require('jsdom');
+    const { JSDOM } = jsdom;
 
+    // const frag = JSDOM.fragment(`<p>Hello</p>`);
 
-    console.log({ document });
+    JSDOM.fromURL(`http://localhost:4200/index.html`).then(dom => {
+      console.log(dom.serialize());
+    });
+    // console.log(frag.firstChild.outerHTML); // logs "<p>Hello</p>"
 
     // if (fastboot) {
     //   // how to get this working?

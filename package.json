@@ -21,7 +21,8 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
-    "ember-cli-babel": "^6.16.0"
+    "ember-cli-babel": "^6.16.0",
+    "jsdom": "^13.0.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
@@ -56,6 +57,9 @@
     "node": "6.* || 8.* || >= 10.*"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "fastbootDependencies": [
+      "jsdom"
+    ]
   }
 }
