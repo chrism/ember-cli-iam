@@ -11,6 +11,8 @@ module('Acceptance | fingerprinted path', function(hooks) {
     const referencePath = find('#tomster-reference').getAttribute('src');
 
     assert.equal(currentURL(), '/');
+    assert.dom('#title').hasText('Injecting fingerprinted assets');
     assert.dom('#tomster-helper').hasAttribute('src', referencePath);
+    assert.dom('#tomster-computed').hasAttribute('src', referencePath);
   });
 });
